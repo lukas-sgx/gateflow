@@ -2,7 +2,7 @@ FROM node:alpine
 
 WORKDIR /app
 COPY package.json .
-COPY app/ app/
+COPY src/ .
 
 RUN npm install
 EXPOSE 58925
