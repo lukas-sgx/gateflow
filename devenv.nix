@@ -20,15 +20,12 @@
 
   # https://devenv.sh/basics/
   enterShell = ''
-    # npm start dev
     git --version # Use packages
   '';
 
-  # https://devenv.sh/tasks/
-  # tasks = {
-  #   "myproj:setup".exec = "mytool build";
-  #   "devenv:enterShell".after = [ "myproj:setup" ];
-  # };
+  processes.nodemon = {
+    exec = "npm run dev";
+  };
 
   # https://devenv.sh/tests/
   enterTest = ''
