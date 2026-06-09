@@ -1,6 +1,6 @@
 const { createAppAuth } = require("@octokit/auth-app");
 const { Octokit } = require("@octokit/rest");
-const dotenv = require("dotenv");
+const dotenv = require("@dotenvx/dotenvx");
 
 dotenv.config({ path: "src/.env" })
 
