@@ -34,7 +34,7 @@ async function controller(data) {
             if (pulls.length === 0) return;
             const pr_number = pulls[0].number;
 
-            await label.add(owner, repo, pr_number, [{ name: "needs: reviewer", color: "#312238" }]);
+            await label.add(owner, repo, pr_number, [{ name: "needs: reviewer", color: "312238" }]);
             await review.requestReview(owner, repo, pr_number);
         }
     }
