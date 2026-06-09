@@ -37,4 +37,20 @@ async function add(owner, repo, pull_number, labels) {
     })
 }
 
-module.exports = { add }
+async function del(owner, repo, pull_number, labels) {
+    for (const label of labels) {
+        try {
+            await octokit.rest.issues.removeLabel({
+                owner: owner,
+                repo: repo,
+                issue_number: pull_number,
+                name: label
+            })
+        } catch {}
+    }
+}
+
+module.exports = {
+    add,
+    del
+}
