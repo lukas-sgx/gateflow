@@ -17,9 +17,6 @@ async function safeToMerge(owner, repo, pull_number, job) {
         await label.del(owner, repo, pull_number, ["unsafe to merge"]);
         await label.add(owner, repo, pull_number, [{ name: "needs: reviewer", color: "312238" }]);
         await label.add(owner, repo, pull_number, [{ name: "safe to merge", color: "05dbb4" }]);
-        try {
-            await review.requestReview(owner, repo, pr_number);
-        } catch {}
     } else {
         await label.del(owner, repo, pull_number, ["safe to merge", "needs: reviewer"]);
         await label.add(owner, repo, pull_number, [{ name: "unsafe to merge", color: "e03849" }]);
