@@ -4,7 +4,7 @@ const workflow = require('./workflows/controller')
 const app = express();
 const port = 58925;
 
-app.use(express.json());
+app.use(express.json({ limit: '10mb' }));
 
 app.post('/', async (req, res) => {
     if (req.body.pull_request != undefined) {
