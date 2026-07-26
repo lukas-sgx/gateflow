@@ -1,14 +1,14 @@
 {
-  "name": "dispatch",
+  "name": "gateflow",
   "version": "1.0.0",
   "description": "",
-  "homepage": "https://github.com/lukas-sgx/dispatch#readme",
+  "homepage": "https://github.com/lukas-sgx/gateflow#readme",
   "bugs": {
-    "url": "https://github.com/lukas-sgx/dispatch/issues"
+    "url": "https://github.com/lukas-sgx/gateflow/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lukas-sgx/dispatch.git"
+    "url": "git+https://github.com/lukas-sgx/gateflow.git"
   },
   "license": "MIT",
   "author": "lukas-sgx",

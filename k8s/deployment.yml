@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: dispatch-deploy
-  namespace: dispatch
+  name: gateflow-deploy
+  namespace: gateflow
 spec:
   replicas: 2
   selector:
     matchLabels:
-        app: dispatch
+        app: gateflow
   template:
     metadata:
         labels:
-           app: dispatch
+           app: gateflow
     spec:
       containers:
-        - name: dispatch
-          image: lukassgx/dispatch:latest
+        - name: gateflow
+          image: lukassgx/gateflow:latest
           ports:
               - containerPort: 58925

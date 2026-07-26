@@ -17,5 +17,5 @@ app.post('/', async (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`Dispatch app listening on port ${port}`);
+    console.log(`gateflow app listening on port ${port}`);
 });
