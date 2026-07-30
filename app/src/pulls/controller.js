@@ -2,23 +2,23 @@ const comment = require("./actions/comment");
 const review = require("./actions/review");
 
 async function handle_new_pr(pull_request, data) {
-    if (pull_request.base.ref === "main" && pull_request.head.ref != "dev") {
+    
+    if (pull_request.base.ref === "main" && pull_request.head.ref != "develop") {
         await review.request_changes(
             data.repository.owner.login,
             data.repository.name,
             pull_request.number,
             `This PR is targeting the wrong branch,
-**\`main\`** should only receive merges from **\`dev\`**.
+**\`main\`** should only receive merges from **\`develop\`**.
             
-Please update the base branch to \`dev\` and resubmit.`
+Please update the base branch to \`develop\` and resubmit.`
         )
-    } else {
-        if (pull_request.body === null) {
-            await review.request_changes(
-                data.repository.owner.login,
-                data.repository.name,
-                pull_request.number,
-                `This PR has no description.
+    } else if (pull_request.body === null) {
+        await review.request_changes(
+            data.repository.owner.login,
+            data.repository.name,
+            pull_request.number,
+            `This PR has no description.
                 
 Please add a **PR body** explaining:
 - What this change does
@@ -26,8 +26,8 @@ Please add a **PR body** explaining:
 - How it was tested (if applicable)
 
 This helps reviewers understand the context faster.`
-            )
-        }
+        )
+    } else {
         try {
             await comment.add(
                 data.repository.owner.login,
