@@ -3,7 +3,7 @@ const review = require("./actions/review");
 
 async function handle_new_pr(pull_request, data) {
     
-    if (pull_request.base.ref === "main" && pull_request.head.ref != "develop") {
+    if (pull_request.base.ref === "main" && (pull_request.head.ref != "develop" || pull_request.head.ref != "staging")) {
         await review.request_changes(
             data.repository.owner.login,
             data.repository.name,
