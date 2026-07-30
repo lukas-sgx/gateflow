@@ -3,15 +3,15 @@ const review = require("./actions/review");
 
 async function handle_new_pr(pull_request, data) {
     
-    if (pull_request.base.ref === "main" && (pull_request.head.ref != "develop" || pull_request.head.ref != "staging")) {
+    if (pull_request.base.ref === "main" && !(pull_request.head.ref == "develop" || pull_request.head.ref == "staging")) {
         await review.request_changes(
             data.repository.owner.login,
             data.repository.name,
             pull_request.number,
             `This PR is targeting the wrong branch,
-**\`main\`** should only receive merges from **\`develop\`**.
+**\`main\`** should only receive merges from **\`develop\`** or **\`staging\`**.
             
-Please update the base branch to \`develop\` and resubmit.`
+Please update the base branch to \`develop\` or \`staging\` and resubmit.`
         )
     } else if (pull_request.body === null) {
         await review.request_changes(
