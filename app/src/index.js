@@ -1,12 +1,16 @@
 const express = require('express');
 const pull_request = require('./pulls/controller')
 const workflow = require('./workflows/controller')
+const comment = require('./comment/controller')
 const app = express();
 const port = 58925;
 
 app.use(express.json({ limit: '10mb' }));
 
 app.post('/', async (req, res) => {
+    if (req.body.comment != undefined) {
+        await comment.controller(req.body)
+    }
     if (req.body.pull_request != undefined) {
         await pull_request.controller(req.body)
     }
