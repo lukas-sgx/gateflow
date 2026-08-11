@@ -24,7 +24,7 @@ async function get_pull_request_ref(owner, repo, pr_number, installationId) {
 
 async function merge_pull_request(owner, repo, pr_number, comment_id, type = "merge", installationId) {
     try {
-        var { baseBranch, headBranch, body } = await get_pull_request_ref(owner, repo, pr_number)
+        var { baseBranch, headBranch, body } = await get_pull_request_ref(owner, repo, pr_number, installationId)
 
 
         if (baseBranch === null || headBranch === null) {
@@ -40,9 +40,9 @@ async function merge_pull_request(owner, repo, pr_number, comment_id, type = "me
         });
 
         if (response.data.merged) {
-            await reactions.react_comment(owner, repo, comment_id, "rocket")
+            await reactions.react_comment(owner, repo, comment_id, "rocket", installationId)
         } else {
-            await reactions.react_comment(owner, repo, comment_id, "❌")
+            await reactions.react_comment(owner, repo, comment_id, "❌", installationId)
         }
     } catch (error) {}
 }
