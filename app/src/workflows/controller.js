@@ -1,4 +1,4 @@
-const { octokit } = require("../middleware/auth");
+const { newOctokit } = require("../middleware/auth");
 const jobs_runner = require("./actions/jobs");
 
 const runningJobs = new Map();
@@ -24,7 +24,7 @@ async function controller(data) {
         if (jobs.size === 0) {
             runningJobs.delete(run_id);
 
-            const { data: pulls } = await octokit.repos.listPullRequestsAssociatedWithCommit({
+            const { data: pulls } = await newOctokit(data.installation.id).repos.listPullRequestsAssociatedWithCommit({
                 owner,
                 repo,
                 commit_sha: job.head_sha,
@@ -33,7 +33,7 @@ async function controller(data) {
             if (pulls.length === 0) return;
             const pr_number = pulls[0].number;
 
-            await jobs_runner.safeToMerge(owner, repo, pr_number, job)
+            await jobs_runner.safeToMerge(owner, repo, pr_number, job, data.installation.id)
         }
     }
 }

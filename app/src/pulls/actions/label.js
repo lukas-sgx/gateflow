@@ -1,8 +1,8 @@
-const { octokit } = require("../../middleware/auth");
+const { newOctokit } = require("../../middleware/auth");
 
-async function is_exist(owner, repo, label_name) {
+async function is_exist(owner, repo, label_name, installationId) {
     try {
-        const { data } = await octokit.rest.issues.getLabel({
+        const { data } = await newOctokit(installationId).rest.issues.getLabel({
             owner: owner,
             repo: repo,
             name: label_name
@@ -11,10 +11,10 @@ async function is_exist(owner, repo, label_name) {
     } catch (err) {}
 }
 
-async function make(owner, repo, label) {
+async function make(owner, repo, label, installationId) {
     const color = Math.floor(Math.random() * 0xFFFFFF).toString(16).padStart(6, '0');
     
-    await octokit.rest.issues.createLabel({
+    await newOctokit(installationId).rest.issues.createLabel({
         owner: owner,
         repo: repo,
         name: label?.name,
@@ -22,14 +22,14 @@ async function make(owner, repo, label) {
     })
 }
 
-async function add(owner, repo, pull_number, labels) {
+async function add(owner, repo, pull_number, labels, installationId) {
     for (const label of labels) {
         if (await is_exist(owner, repo, label.name) == undefined) {
             await make(owner, repo, label)
         }
     }
     
-    await octokit.rest.issues.addLabels({
+    await newOctokit(installationId).rest.issues.addLabels({
         owner: owner,
         repo: repo,
         issue_number: pull_number,
@@ -37,10 +37,10 @@ async function add(owner, repo, pull_number, labels) {
     })
 }
 
-async function del(owner, repo, pull_number, labels) {
+async function del(owner, repo, pull_number, labels, installationId) {
     for (const label of labels) {
         try {
-            await octokit.rest.issues.removeLabel({
+            await newOctokit(installationId).rest.issues.removeLabel({
                 owner: owner,
                 repo: repo,
                 issue_number: pull_number,

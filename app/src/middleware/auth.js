@@ -4,13 +4,17 @@ const dotenv = require("@dotenvx/dotenvx");
 
 dotenv.config({ path: "src/.env" })
 
-const octokit = new Octokit({
-    authStrategy: createAppAuth,
-    auth: {
-        appId: process.env.APP_ID,
-        privateKey: process.env.PRIVATE_KEY,
-        installationId: process.env.INSTALLATION_ID,
-    },
-});
+function newOctokit(installationId) {
+    const octokit = new Octokit({
+        authStrategy: createAppAuth,
+        auth: {
+            appId: process.env.APP_ID,
+            privateKey: process.env.PRIVATE_KEY,
+            installationId: installationId,
+        },
+    });
 
-module.exports = { octokit };
+    return octokit
+}
+
+module.exports = { newOctokit };

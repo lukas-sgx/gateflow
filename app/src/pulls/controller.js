@@ -11,7 +11,8 @@ async function handle_new_pr(pull_request, data) {
             `This PR is targeting the wrong branch,
 **\`main\`** should only receive merges from **\`develop\`**.
             
-Please update the base branch to \`develop\` and resubmit.`
+Please update the base branch to \`develop\` and resubmit.`,
+            data.installation.id
         )
     } else if (pull_request.body === null) {
         await review.request_changes(
@@ -25,7 +26,8 @@ Please add a **PR body** explaining:
 - Why it's needed
 - How it was tested (if applicable)
 
-This helps reviewers understand the context faster.`
+This helps reviewers understand the context faster.`,
+            data.installation.id
         )
     } else {
         try {
@@ -40,9 +42,10 @@ This helps reviewers understand the context faster.`
 - [ ] Related issues are linked (closes #...)
 - [ ] No debug code or TODOs left behind
 
-Thanks for your contribution!`
+Thanks for your contribution!`,
+                data.installation.id
             );
-        } catch (err) { }
+        } catch (err) {}
     }
 }
 

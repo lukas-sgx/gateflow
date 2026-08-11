@@ -1,8 +1,8 @@
-const { octokit } = require("../../middleware/auth");
+const { newOctokit } = require("../../middleware/auth");
 
-async function react_comment(owner, repo, comment_id, react = "eyes") {
+async function react_comment(owner, repo, comment_id, react = "eyes", installationId) {
     try {
-        await octokit.rest.reactions.createForIssueComment({
+        await newOctokit(installationId).rest.reactions.createForIssueComment({
             owner: owner,
             repo: repo,
             comment_id: comment_id,

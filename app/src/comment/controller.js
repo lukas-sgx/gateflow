@@ -10,8 +10,8 @@ async function handle_comment_pr(comment, data) {
 
     if (data.issue.state == "open") {
         if (comment.body == "/merge") {
-            await reactions.react_comment(owner, repo, comment_id)
-            await merge.merge_pull_request(owner, repo, parseInt(pr_url.split("/").at(-1), 10), comment_id)
+            await reactions.react_comment(owner, repo, comment_id, data.installation.id)
+            await merge.merge_pull_request(owner, repo, parseInt(pr_url.split("/").at(-1), 10), comment_id, data.installation.id)
         }
     }
 }

@@ -1,8 +1,8 @@
-const { octokit } = require("../../middleware/auth");
+const { newOctokit } = require("../../middleware/auth");
 
-async function request_changes(owner, repo, pull_number, body) {
+async function request_changes(owner, repo, pull_number, body, installationId) {
     try {
-        await octokit.rest.pulls.createReview({
+        await newOctokit(installationId).rest.pulls.createReview({
             owner: owner,
             repo: repo,
             pull_number: pull_number,

@@ -1,9 +1,9 @@
-const { octokit } = require("../../middleware/auth");
+const { newOctokit } = require("../../middleware/auth");
 const reactions = require('../../comment/actions/reactions')
 
-async function get_pull_request_ref(owner, repo, pr_number) {
+async function get_pull_request_ref(owner, repo, pr_number, installationId) {
     try {
-        const response = await octokit.rest.pulls.get({
+        const response = await newOctokit(installationId).rest.pulls.get({
           owner: owner,
           repo: repo,
           pull_number: pr_number,
@@ -22,7 +22,7 @@ async function get_pull_request_ref(owner, repo, pr_number) {
     }
 }
 
-async function merge_pull_request(owner, repo, pr_number, comment_id, type = "merge") {
+async function merge_pull_request(owner, repo, pr_number, comment_id, type = "merge", installationId) {
     try {
         var { baseBranch, headBranch, body } = await get_pull_request_ref(owner, repo, pr_number)
 
@@ -30,7 +30,7 @@ async function merge_pull_request(owner, repo, pr_number, comment_id, type = "me
         if (baseBranch === null || headBranch === null) {
             return
         }
-        const response = await octokit.rest.pulls.merge({
+        const response = await newOctokit(installationId).rest.pulls.merge({
             owner: owner,
             repo: repo,
             pull_number: pr_number,
