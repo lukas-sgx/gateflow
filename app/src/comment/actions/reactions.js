@@ -1,6 +1,6 @@
 const { newOctokit } = require("../../middleware/auth");
 
-async function react_comment(owner, repo, comment_id, react = "eyes", installationId) {
+async function react_comment(owner, repo, comment_id, installationId, react = "eyes") {
     try {
         await newOctokit(installationId).rest.reactions.createForIssueComment({
             owner: owner,
