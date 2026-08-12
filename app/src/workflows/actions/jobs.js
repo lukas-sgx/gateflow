@@ -7,7 +7,7 @@ async function getMergeableState(owner, repo, pull_number, installationId) {
     if (pr.mergeable !== null) return pr;
 }
 
-async function safeToMerge(owner, repo, pull_number, job, head, base, installationId) {
+async function safeToMerge(owner, repo, pull_number, job, installationId) {
     const jobSucceeded = job.conclusion === "success";
     const pr = await getMergeableState(owner, repo, pull_number, installationId);
     if (!pr) return;

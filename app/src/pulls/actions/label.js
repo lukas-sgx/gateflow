@@ -24,8 +24,8 @@ async function make(owner, repo, label, installationId) {
 
 async function add(owner, repo, pull_number, labels, installationId) {
     for (const label of labels) {
-        if (await is_exist(owner, repo, label.name) == undefined) {
-            await make(owner, repo, label)
+        if (await is_exist(owner, repo, label.name, installationId) == undefined) {
+            await make(owner, repo, label, installationId)
         }
     }
     

@@ -24,16 +24,41 @@ async function controller(data) {
         if (jobs.size === 0) {
             runningJobs.delete(run_id);
 
-            const { data: pulls } = await newOctokit(data.installation.id).repos.listPullRequestsAssociatedWithCommit({
-                owner,
-                repo,
-                commit_sha: job.head_sha,
-            });
+            let pulls = []; 
+            const octokit = newOctokit(data.installation.id);
 
-            if (pulls.length === 0) return;
+            try {
+                const response = await octokit.repos.listPullRequestsAssociatedWithCommit({
+                    owner,
+                    repo,
+                    commit_sha: job.head_sha,
+                });
+                pulls = response.data || [];
+            } catch (err) {
+                console.error(err);
+            }
+
+            if (pulls.length === 0 && job.head_branch) {
+                try {
+                    const response = await octokit.pulls.list({
+                        owner,
+                        repo,
+                        state: "open",
+                        per_page: 100
+                    });
+
+                    const allOpenPulls = response.data || [];
+
+                    pulls = allOpenPulls.filter(pr => pr.head.ref === job.head_branch);
+                } catch (err) {
+                    console.error(err);
+                }
+            }
+
+            if (pulls.length === 0);
+
             const pr_number = pulls[0].number;
-
-            await jobs_runner.safeToMerge(owner, repo, pr_number, job, data.installation.id)
+            await jobs_runner.safeToMerge(owner, repo, pr_number, job, data.installation.id);
         }
     }
 }
