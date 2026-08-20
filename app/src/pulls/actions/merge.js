@@ -34,7 +34,7 @@ async function merge_pull_request(owner, repo, pr_number, comment_id, installati
             owner: owner,
             repo: repo,
             pull_number: pr_number,
-            commit_title: `merge '${headBranch}' into ${baseBranch}`,
+            commit_title: `merge: '${headBranch}' into ${baseBranch}`,
             commit_message: `patch: https://patch-diff.githubusercontent.com/raw/${owner}/${repo}/pull/${pr_number}.patch\ndiff: https://patch-diff.githubusercontent.com/raw/${owner}/${repo}/pull/${pr_number}.diff`,
             merge_method: type,
         });
